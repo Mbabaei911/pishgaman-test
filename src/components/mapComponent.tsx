@@ -1,4 +1,3 @@
-
 import { RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { addPoint } from "../store/mapSlice";
@@ -14,7 +13,6 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 // Fix marker icon issue
-delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "/leaflet/images/marker-icon-2x.png",
   iconUrl: "/leaflet/images/marker-icon.png",
@@ -22,23 +20,27 @@ L.Icon.Default.mergeOptions({
 });
 
 // Define the type for the clicked position
-// type ClickedPosition = [number, number] | null;
+type Point = {
+  lat: number;
+  lng: number;
+};
 
 const MapComponent: React.FC = () => {
   const dispatch = useDispatch();
   const geolocations = useSelector((state: RootState) => state.map);
+
   // Custom hook to handle map click events
   const MapClickHandler = () => {
     useMapEvents({
       click: (event: L.LeafletMouseEvent) => {
         const { lat, lng } = event.latlng;
+        console.log("Clicked at:", lat, lng); // Log the clicked position
         dispatch(addPoint({ lat, lng }));
       },
     });
     return null; // This component does not render anything
   };
 
-  //////MAP
   return (
     <MapContainer
       center={[29.592714, 52.5376106]}
@@ -53,22 +55,21 @@ const MapComponent: React.FC = () => {
       {/* Use the custom hook to handle map clicks */}
       <MapClickHandler />
 
-      {geolocations.points?.map((point, index) => {
-        return (
+      {geolocations.points && geolocations.points.length > 0 ? (
+        geolocations.points.map((point: Point, index: number) => (
           <Marker position={[point.lat, point.lng]} key={index}>
             <Popup>
-              <p className="text-right fontMedium ">
-                موقعیت نشان شده
-              </p>
-
-              <p className="">
+              <p className="text-right fontMedium">موقعیت نشان شده</p>
+              <p>
                 Latitude: {point.lat}
                 <br /> Longitude: {point.lng}
               </p>
             </Popup>
           </Marker>
-        );
-      })}
+        ))
+      ) : (
+        <p>No points available</p> // Fallback if no points are available
+      )}
     </MapContainer>
   );
 };
