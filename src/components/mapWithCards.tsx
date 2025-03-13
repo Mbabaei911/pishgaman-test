@@ -9,9 +9,7 @@ const MapWithCards: React.FC = () => {
   return (
     <div className="h-screen w-full">
       <Header />
-
       <MapComponent />
-
       <div className=" bottom-0 z-[400] fixed left-1/2 -translate-x-1/2">
         <Card />
       </div>

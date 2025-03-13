@@ -2,21 +2,30 @@
 // src/components/RequestModal.tsx
 import React from 'react';
 
+
+////////
+//creating interface
 interface RequestModalProps {
   isOpen: boolean;
   requestNo: string | null;
   onClose: () => void;
 }
-
+/////////
+///request modal component
 const RequestModal: React.FC<RequestModalProps> = ({ isOpen, requestNo, onClose }) => {
   if (!isOpen) return null; // Don't render the modal if it's not open
 
+  //////handling bg click of modal
   const handleBackgroundClick = () => {
-    onClose(); // Close the modal when clicking on the background
+    onClose(); 
   };
+  ////////handling click on modal info card
   const handleModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation(); // Prevent the click event from bubbling up to the background
   };
+
+
+  /////JSX
   return (
     <div onClick={handleBackgroundClick} className=" inset-0 flex items-center justify-center bg-cyan-400 bg-opacity-50 h-screen w-screen fontMedium ">
       <div className="bg-white rounded-lg shadow-lg p-6 w-1/3" onClick={handleModalClick}>

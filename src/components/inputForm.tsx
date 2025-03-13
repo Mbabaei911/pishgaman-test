@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials, login } from "../store/authSlice";
-import axios from 'axios';
+import axios from "axios";
 
-
+///////login request url
 const enterApiUrl = "https://exam.pishgamanasia.com/webapi/Account/Login";
 
 const LoginForm: React.FC = () => {
+  /////states
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const dispatch = useDispatch();
 
- 
+  //////
+  //handling submit on login button
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,16 +32,15 @@ const LoginForm: React.FC = () => {
       const data = await response.data;
 
       // Dispatch the setCredentials action with the response data
-      if (data.status===1) {
-    
+      if (data.status === 1) {
         const userToken = data.data.userToken; // Ensure this is defined
-        console.log(userToken);
+        // console.log(userToken);
         // setUserToken(userToken); // If this is a local state
         dispatch(setCredentials({ username, password, userToken })); // Dispatch credentials
         dispatch(login()); // Then log in
       }
-  
-      setError(data.message)
+
+      setError(data.message);
     } catch (err) {
       // Handle error appropriately
       if (axios.isAxiosError(err)) {
@@ -51,17 +52,10 @@ const LoginForm: React.FC = () => {
       }
     }
 
-    // Reset the form
-    // setUsername("");
-    // setPassword("");
   };
 
   // const authState = useSelector((state: RootState) => state.auth);
-
-  
-   
-  
-
+/////////JSX
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-r from-cyan-200 to-cyan-400 ">
       <form
@@ -104,7 +98,7 @@ const LoginForm: React.FC = () => {
         <p className="text-red-400 text-xs my-3">{error}</p>
         <button
           type="submit"
-          className="w-full bg-yellow-400 text-white font-bold py-2 rounded-full hover:bg-yellow-500 transition duration-200 cursor-pointer"
+          className="w-full bg-yellow-400  font-bold py-2 rounded-full hover:bg-yellow-500 transition duration-200 cursor-pointer text-black shadow-sm"
         >
           ورود
         </button>

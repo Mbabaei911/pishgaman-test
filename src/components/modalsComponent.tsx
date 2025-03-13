@@ -51,10 +51,13 @@ export const Card: React.FC<unknown> = () => {
   // console.log(pointSelections);
   // console.log(userToken);
 
+  //////////////
+  ///handling close modal button
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setRequestNo(null); // Clear the request number when closing
   };
+
   ////////////////
   ///search button click
   const onSearchClick = async (): Promise<void> => {
@@ -67,13 +70,15 @@ export const Card: React.FC<unknown> = () => {
       const response = await axios.get(
         `https://exam.pishgamanasia.com/webapi/Request/GetVehicleUsers?SearchTerm=${searchTerm}&UserToken=${userToken}`
       );
-      setMessage(response.data.message);
       console.log(response.data);
-      setReqId(response?.data?.data[0]?.id);
-      // console.log("req id is", reqId);
-      setRequestStatus(response.data.status);
-      setVehicleName(response.data.data[0].name);
-      // console.log(requestStatus);
+      if (response.data.data.length>0) {
+        
+        setMessage(`${response.data.data[0]?.name} مورد نظر یافت شد! `);
+        setReqId(response?.data?.data[0]?.id);
+        setRequestStatus(response.data.status);
+        setVehicleName(response.data.data[0]?.name);
+        console.log(response.data.data[0]);
+      }
       if (response.data.data.length === 0) {
         // setRequestStatus(0);
         setMessage("ماشین آلات مورد نظر یافت نشد");
@@ -87,9 +92,9 @@ export const Card: React.FC<unknown> = () => {
       }
     }
   };
+
   /////////////
   ///onRegisterButtonHandle
-
   const registerButtonClick = async (): Promise<void> => {
     try {
       // First API call
@@ -103,12 +108,13 @@ export const Card: React.FC<unknown> = () => {
         }
       );
 
-      // Set request number and open modal
+      // Setting request number and open modal
       const requestNo = data.data.requestNo;
       setRequestNo(requestNo);
       setIsModalOpen(true);
-      console.log(data);
+      // console.log(data);
 
+      ////////making time of record
       const currentDateTime = new Date().toLocaleString("fa-IR", {
         timeZone: "Asia/Tehran",
       });
@@ -127,12 +133,9 @@ export const Card: React.FC<unknown> = () => {
       console.log(error);
     }
   };
-  console.log("req no", requestNo);
-  console.log("req sts", requestStatus);
-  console.log("points", pointSelections.points);
-  console.log("points length", pointSelections.points.length);
+ 
   /////////////
-  ///register button
+  ///creating register button 
   const renderingRegisterButton = () => {
     if (
       requestStatus === 1 &&
@@ -158,6 +161,7 @@ export const Card: React.FC<unknown> = () => {
       );
     }
   };
+
   ////////////////
   ////JSX
   return (
@@ -207,7 +211,9 @@ export const Card: React.FC<unknown> = () => {
             </button>
           </div>
           <div>
-            <p className="text-red-400 text-sm mb-2">{ pointSelections.points.length === 2&&message}</p>
+            <p className="text-red-400 text-sm mb-2">
+              {pointSelections.points.length === 2 && message}
+            </p>
           </div>
           <div className="flex flex-col items-center justify-center ">
             {renderingRegisterButton()}
