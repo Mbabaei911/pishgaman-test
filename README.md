@@ -1,4 +1,9 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Live Deployment
+
+You can view the live application at https://pishgaman-test-5zxn-u0ja89in2-mbabaei911s-projects.vercel.app/
+
+
 
 ## Getting Started
 
