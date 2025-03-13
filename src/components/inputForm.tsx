@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { setCredentials, login } from "../store/authSlice";
 import axios from "axios";
 
@@ -34,8 +34,6 @@ const LoginForm: React.FC = () => {
       // Dispatch the setCredentials action with the response data
       if (data.status === 1) {
         const userToken = data.data.userToken; // Ensure this is defined
-        // console.log(userToken);
-        // setUserToken(userToken); // If this is a local state
         dispatch(setCredentials({ username, password, userToken })); // Dispatch credentials
         dispatch(login()); // Then log in
       }

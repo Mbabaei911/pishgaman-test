@@ -48,8 +48,6 @@ export const Card: React.FC<unknown> = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [requestNo, setRequestNo] = useState<string | null>();
 
-  // console.log(pointSelections);
-  // console.log(userToken);
 
   //////////////
   ///handling close modal button
@@ -70,7 +68,7 @@ export const Card: React.FC<unknown> = () => {
       const response = await axios.get(
         `https://exam.pishgamanasia.com/webapi/Request/GetVehicleUsers?SearchTerm=${searchTerm}&UserToken=${userToken}`
       );
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.data.length>0) {
         
         setMessage(`${response.data.data[0]?.name} مورد نظر یافت شد! `);
@@ -80,8 +78,8 @@ export const Card: React.FC<unknown> = () => {
         console.log(response.data.data[0]);
       }
       if (response.data.data.length === 0) {
-        // setRequestStatus(0);
         setMessage("ماشین آلات مورد نظر یافت نشد");
+        setRequestStatus(0)
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -112,7 +110,7 @@ export const Card: React.FC<unknown> = () => {
       const requestNo = data.data.requestNo;
       setRequestNo(requestNo);
       setIsModalOpen(true);
-      // console.log(data);
+      
 
       ////////making time of record
       const currentDateTime = new Date().toLocaleString("fa-IR", {

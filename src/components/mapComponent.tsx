@@ -2,7 +2,7 @@
 import { RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { addPoint } from "../store/mapSlice";
-import React, { useState } from "react";
+import React from "react";
 import {
   MapContainer,
   TileLayer,
@@ -25,20 +25,8 @@ L.Icon.Default.mergeOptions({
 // type ClickedPosition = [number, number] | null;
 
 const MapComponent: React.FC = () => {
-  // const position: [number, number] = [29.5918, 52.5837];
   const dispatch = useDispatch();
-  // const [popupVisible, setPopupVisible] = useState<boolean>(false);
-  // const [clickedPosition, setClickedPosition] = useState<ClickedPosition>(null);
-
-  // const handleMarkerClick = () => {
-  //   setPopupVisible(!popupVisible); // Toggle popup visibility
-  // };
-
   const geolocations = useSelector((state: RootState) => state.map);
-
-  // console.log(geolocations.points);
-
-
   // Custom hook to handle map click events
   const MapClickHandler = () => {
     useMapEvents({

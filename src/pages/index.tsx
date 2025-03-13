@@ -1,5 +1,6 @@
 import LoginForm from "@/components/inputForm";
 import MapWithCards from "@/components/mapWithCards";
+import { RootState } from "@/store/rootReducer";
 import { useSelector } from "react-redux";
 
 
