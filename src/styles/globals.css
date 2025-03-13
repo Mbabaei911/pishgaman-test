@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: "FontMedium";
+  font-style: normal;
+  font-weight: 400;
+  src: local("FontMedium"), url("../../fonts/iranyekanMedium.woff"),
+    format("woff2");
+}
+.fontMedium {
+  font-family: "FontMedium";
+}
+
+body{
+  direction: rtl;
+}
+.z1{
+  z-index:100 !important
+}
